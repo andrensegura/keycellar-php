@@ -1,15 +1,24 @@
 <?php
+////////////////
+//this page is under heavy construction
+//and is basically just a testing page.
+////////////////
 
+
+////////////////
+//Check if a the visitor is logged in.
+////////////////
 include_once("cookie.php");
-
 $username = check_cookie();
-
 readfile("html/header.html");
 
 include_once("mysql.php");
 $result = query_database("SELECT * FROM users WHERE username = '" . $username . "';");
 $result = $result->fetch_assoc();
 
+////////////////
+//print out some info.
+////////////////
 echo "Username: " . $result['username'] . "<br>";
 echo "Email: " . $result['email'] . "<br>";
 if (!empty($result['avatar'])){
