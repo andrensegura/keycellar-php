@@ -1,7 +1,11 @@
 <?php
 
-
+/////////////////////
+//query_database simply runs a mysql query and returns
+//a result object to the caller.
+/////////////////////
 function query_database($query){
+    //config.php contains all of the database configuration info.
     include 'config.php';
 
     // Create connection
@@ -17,10 +21,6 @@ function query_database($query){
     }
 
     return $result;
-    
-    //while ($row = $result->fetch_assoc()){
-    //    echo $row['username'] . '<br>';
-    //}
 }
 
 
