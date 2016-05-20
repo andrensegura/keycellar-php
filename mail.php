@@ -1,4 +1,9 @@
 <?php
+////////////////////////
+//This file is to contain all email messages that may be sent out.
+//This may be replaced with a script that was built to handle
+//large amounts of users/maling lists in the future
+////////////////////////
 
 function send_verification($email, $key){
     $message = "
