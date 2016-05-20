@@ -1,4 +1,9 @@
 <?php
+///////////////////
+//I did not write this file or any of the steam stuff. I plan on rewriting
+//this stuff to be cleaner once I understand it. But for now, it works.
+///////////////////
+
     require ('steam/SteamAuthentication/steamauth/steamauth.php');  
     readfile('html/header.html');
     
