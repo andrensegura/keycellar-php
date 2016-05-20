@@ -2,8 +2,11 @@
 
 readfile("html/header.html");
 
+///////////////////////
 //Check if the user is attempting to validate the account
-//before doing anything.
+//before doing anything (i.e. user already signed up and
+//has clicked on the validation link in the welcome email).
+///////////////////////
 
 $key = $_GET['key'];
 if ( !empty($key) ) {
@@ -13,8 +16,10 @@ if ( !empty($key) ) {
     }
 }
 
+///////////////////////
 //Not validating, so check if they are trying to register.
 //If not, then give them the registration form.
+///////////////////////
 
 $username    = $_POST['username'];
 $email       = $_POST['email'];
@@ -22,28 +27,41 @@ $password    = $_POST['password'];
 $password2   = $_POST['password2'];
 $registering = $_POST['registering'];
 
+//if the user is registering, check to see if the
+//registration was successful.
 if (!empty($registering)){
     $register_success = test_input($username, $email, $password, $password2);
 }
 
 
 
-//If registering, then store the key in the database and
-//send the user an email letting them know how to verify.
+///////////////////////
+//if the user is registering and the registration was successful,
+//register the user and email them the registration key.
+///////////////////////
 if ( !empty($registering) && empty($register_success) ) {
     $key = register_user($username, $email, $password);
     include_once("mail.php");
     send_verification($email, $key);
     readfile("html/success.html");
+///////////////////////
+//if the user tried to register but the registration had an issue,
+//print out the registration form and let them know what went wrong.
+///////////////////////
 } elseif ( $registering ) {
     readfile("html/register.html");
     echo "<br>" . $register_success . "<br>";
+///////////////////////
+//otherwise, the user just got here
+///////////////////////
 } else {
     readfile("html/register.html");
 }
 
+///////////////////////
 //This function tests all of the input the user provides to make sure it is all valid.
 //Returns an error message describing what went wrong, or nothing if everything passed.
+///////////////////////
 function test_input($username, $email, $password, $password2){
     include_once("mysql.php");
 
@@ -84,10 +102,11 @@ function test_input($username, $email, $password, $password2){
     return;
 }
 
+///////////////////////
 //This function creates a table for the user based on the information provided it.
-//It also turns the password into a hash.
-//This returns a verification key that the user will need to be able to verify their
-//account.
+//It saves the password as a hash. The funciton returns a verification key that
+//the user will need to be able to verify their account.
+///////////////////////
 function register_user($username, $email, $password){
     include_once("mysql.php");
     $key = hash('sha256', $email . time() . $username);
@@ -100,7 +119,12 @@ function register_user($username, $email, $password){
     return $key;
 }
 
-
+///////////////////////
+//verify_account takes a registration key and validates
+//the user that the key matches.
+//The function returns true upon success, or false if the
+//key matches no users.
+///////////////////////
 function verify_account($key){
     include_once("mysql.php");
     $result = query_database("SELECT verified FROM users WHERE verified = '" . $key . "';");
