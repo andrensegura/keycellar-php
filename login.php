@@ -20,6 +20,7 @@ if (!empty($logged_in)) {
 $username = $_POST["username"];
 $password = $_POST["password"];
 require_once('functions.php');
+//check_login returns true on success and also sets the user's cookie
 $success = check_login($username, $password);
 
 if ($success) {
