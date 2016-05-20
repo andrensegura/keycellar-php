@@ -9,7 +9,7 @@ function print_nav(){
 //////////////////////
 //CHECK_LOGIN
 //TAKES username and password strings and checks it against the user table.
-//RETURNS True upon successful login, otherwise False
+//RETURNS True upon successful login and sets a cookie, otherwise False
 //////////////////////
 function check_login($username, $password){
     //empty can be 0, empty, or not set at all.
